@@ -1,3 +1,5 @@
+const std = @import("std");
+
 const I7 = packed struct { flag: i1, data: i7 };
 const I14 = packed struct { flag: i2, data: i14 };
 const I21 = packed struct { flag: i3, data: i21 };
@@ -49,3 +51,29 @@ pub const Decoder = struct {
         }
     }
 };
+
+test "get unsigned" {
+    const data = &[_]u8{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 8, 9 };
+    var decoder = Decoder.init(data);
+    const i_1 = try decoder.get(u8);
+    try std.testing.expect(1 == i_1);
+    const i_2 = try decoder.get(u16);
+    try std.testing.expect(0x0302 == i_2);
+    const i_4 = try decoder.get(u32);
+    try std.testing.expect(0x07060504 == i_4);
+    const i_8 = try decoder.get(u64);
+    try std.testing.expect(0x08040302_01000908 == i_8);
+}
+
+test "get signed" {
+    const data = &[_]u8{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 8, 9 };
+    var decoder = Decoder.init(data);
+    const i_1 = try decoder.get(i8);
+    try std.testing.expect(1 == i_1);
+    const i_2 = try decoder.get(i16);
+    try std.testing.expect(0x0302 == i_2);
+    const i_4 = try decoder.get(i32);
+    try std.testing.expect(0x07060504 == i_4);
+    const i_8 = try decoder.get(i64);
+    try std.testing.expect(0x08040302_01000908 == i_8);
+}
