@@ -47,7 +47,7 @@ fn run_decompile() !void {
 
 fn decompile_file(fileName: []const u8) !void {
     // Open the file
-    const file = try std.fs.openFileAbsolute(fileName, .{ .mode = .read_only });
+    const file = try std.fs.cwd().openFile(fileName, .{ .mode = .read_only });
     defer file.close();
 
     // Read the contents
