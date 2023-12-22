@@ -6,23 +6,21 @@ var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 const allocator = gpa.allocator();
 
 var config = struct {
-    help: bool = false,
+    file: []const u8 = undefined,
 }{};
-var help = cli.Option{
-    .long_name = "help",
-    .help = "Prints help information",
-    .short_alias = 'h',
-    .value_ref = cli.mkRef(&config.help),
+var file_arg = cli.PositionalArg{
+    .name = "file",
+    .help = "File to decompile",
+    .value_ref = cli.mkRef(&config.file),
 };
 var app = &cli.App{
     .author = "Zhuo Nengwen",
     .command = cli.Command{
         .name = "dcu2pas",
-        .options = &.{
-            &help,
-        },
         .target = cli.CommandTarget{
-            .action = cli.CommandAction{ .exec = run_decompile },
+            .action = cli.CommandAction{ .positional_args = cli.PositionalArgs{
+                .args = &.{&file_arg},
+            }, .exec = run_decompile },
         },
     },
     .version = info.build_date ++ "-" ++ info.git_commit,
@@ -33,4 +31,7 @@ pub fn main() !void {
     return cli.run(app, allocator);
 }
 
-fn run_decompile() !void {}
+fn run_decompile() !void {
+    const c = &config;
+    std.debug.print("Decompiling {s}...\n", .{c.file});
+}
