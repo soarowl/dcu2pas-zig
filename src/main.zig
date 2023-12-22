@@ -1,26 +1,36 @@
 const std = @import("std");
 const info = @import("build_info");
+const cli = @import("zig-cli");
+
+var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+const allocator = gpa.allocator();
+
+var config = struct {
+    help: bool = false,
+}{};
+var help = cli.Option{
+    .long_name = "help",
+    .help = "Prints help information",
+    .short_alias = 'h',
+    .value_ref = cli.mkRef(&config.help),
+};
+var app = &cli.App{
+    .author = "Zhuo Nengwen",
+    .command = cli.Command{
+        .name = "dcu2pas",
+        .options = &.{
+            &help,
+        },
+        .target = cli.CommandTarget{
+            .action = cli.CommandAction{ .exec = run_decompile },
+        },
+    },
+    .version = info.build_date ++ "-" ++ info.git_commit,
+};
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("Build date: {s}.\n", .{info.build_date});
-    std.debug.print("Commit hash: {s}.\n", .{info.git_commit});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
-
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
-
-    try bw.flush(); // don't forget to flush!
+    defer std.debug.assert(gpa.deinit() == .ok);
+    return cli.run(app, allocator);
 }
 
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    defer list.deinit(); // try commenting this out and see if zig detects the memory leak!
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
+fn run_decompile() !void {}
