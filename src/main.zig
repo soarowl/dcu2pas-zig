@@ -1,5 +1,6 @@
 const std = @import("std");
 const info = @import("build_info");
+const dcu = @import("dcu.zig");
 const cli = @import("zig-cli");
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
@@ -57,5 +58,7 @@ fn decompile_file(fileName: []const u8) !void {
 }
 
 fn decomiple_buffer(buffer: []const u8) !void {
-    std.debug.print("File Size: {}\n", .{buffer.len});
+    var d = dcu.Dcu{};
+    d.init(buffer);
+    return d.decode();
 }
