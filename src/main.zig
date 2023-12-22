@@ -10,7 +10,7 @@ var config = struct {
 }{};
 var files_arg = cli.PositionalArg{
     .name = "file",
-    .help = "File to decompile",
+    .help = "Files to decompiled",
     .value_ref = cli.mkRef(&config.files),
 };
 var app = &cli.App{
