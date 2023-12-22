@@ -57,7 +57,7 @@ fn decompile_file(fileName: []const u8) !void {
     try decomiple_buffer(file_buffer);
 }
 
-fn decomiple_buffer(buffer: []const u8) !void {
+fn decomiple_buffer(buffer: []u8) !void {
     var d = dcu.Dcu{};
     d.init(buffer);
     return d.decode();

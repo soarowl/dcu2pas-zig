@@ -36,14 +36,14 @@ pub const Decoder = struct {
         if (self.pos + 1 < self.data.?.len) {
             const b = self.data.?[self.pos];
             if (b & 0b1 == 0) {
+                const u: *U7 = @as(*U7, @constCast(@ptrCast(&b)));
                 self.pos += 1;
-                const u: *U7 = &b;
-                return u.data;
+                return u.*.data;
             }
-            if (b & 0b11 == 0b10) {
+            if (b & 0b11 == 0b01) {
+                const u: *align(1) u16 = @as(*align(1) u16, @constCast(@ptrCast(self.ptr.? + self.pos)));
                 self.pos += 2;
-                const u: *U14 = @as(*align(1) u16, @constCast(@ptrCast(self.ptr.? + self.pos)));
-                return u.data;
+                return u.* >> 2;
             }
             unreachable;
         } else {
@@ -76,4 +76,13 @@ test "get signed" {
     try std.testing.expect(0x07060504 == i_4);
     const i_8 = try decoder.get(i64);
     try std.testing.expect(0x08040302_01000908 == i_8);
+}
+
+test "packed uint" {
+    const data = &[_]u8{ 8, 5, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 8, 9 };
+    var decoder = Decoder.init(data);
+    const i_1 = try decoder.getPackedUInt();
+    try std.testing.expect(0b100 == i_1);
+    const i_2 = try decoder.getPackedUInt();
+    try std.testing.expect(0b0011_0000_01 == i_2);
 }
