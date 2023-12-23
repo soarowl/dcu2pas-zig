@@ -23,7 +23,7 @@ pub const Decoder = struct {
     }
 
     pub fn get(self: *Self, comptime T: type) !T {
-        if (self.pos + @sizeOf(T) < self.data.?.len) {
+        if (self.pos + @sizeOf(T) <= self.data.?.len) {
             const val = @as(*align(1) T, @constCast(@ptrCast(self.ptr.? + self.pos))).*;
             self.pos += @sizeOf(T);
             return val;
@@ -33,7 +33,7 @@ pub const Decoder = struct {
     }
 
     pub fn getPackedUInt(self: *Self) !u64 {
-        if (self.pos + 1 < self.data.?.len) {
+        if (self.pos + 1 <= self.data.?.len) {
             const b = self.data.?[self.pos];
             if (b & 0b1 == 0) {
                 const u: *U7 = @as(*U7, @constCast(@ptrCast(&b)));
@@ -41,34 +41,48 @@ pub const Decoder = struct {
                 return u.*.data;
             }
             if (b & 0b11 == 0b01) {
-                const u: *align(1) U14 = @as(*align(1) U14, @constCast(@ptrCast(self.ptr.? + self.pos)));
-                self.pos += 2;
-                return u.*.data;
+                if (self.pos + 2 <= self.data.?.len) {
+                    const u: *align(1) U14 = @as(*align(1) U14, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                    self.pos += 2;
+                    return u.*.data;
+                }
+                return error.EndOfFile;
             }
             if (b & 0b111 == 0b011) {
-                const u: *align(1) U21 = @as(*align(1) U21, @constCast(@ptrCast(self.ptr.? + self.pos)));
-                self.pos += 3;
-                return u.*.data;
+                if (self.pos + 3 <= self.data.?.len) {
+                    const u: *align(1) U21 = @as(*align(1) U21, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                    self.pos += 3;
+                    return u.*.data;
+                }
+                return error.EndOfFile;
             }
             if (b & 0b1111 == 0b0111) {
-                const u: *align(1) U28 = @as(*align(1) U28, @constCast(@ptrCast(self.ptr.? + self.pos)));
-                self.pos += 4;
-                return u.*.data;
+                if (self.pos + 4 <= self.data.?.len) {
+                    const u: *align(1) U28 = @as(*align(1) U28, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                    self.pos += 4;
+                    return u.*.data;
+                }
+                return error.EndOfFile;
             }
             if (b == 0b1111) {
-                const u: *align(1) u32 = @as(*align(1) u32, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
-                self.pos += 5;
-                return u.*;
+                if (self.pos + 5 <= self.data.?.len) {
+                    const u: *align(1) u32 = @as(*align(1) u32, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
+                    self.pos += 5;
+                    return u.*;
+                }
+                return error.EndOfFile;
             }
             if (b == 0b1111_1111) {
-                const u: *align(1) u64 = @as(*align(1) u64, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
-                self.pos += 9;
-                return u.*;
+                if (self.pos + 9 <= self.data.?.len) {
+                    const u: *align(1) u64 = @as(*align(1) u64, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
+                    self.pos += 9;
+                    return u.*;
+                }
+                return error.EndOfFile;
             }
             unreachable;
-        } else {
-            return error.EndOfFile;
         }
+        return error.EndOfFile;
     }
 };
 
