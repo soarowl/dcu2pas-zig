@@ -41,9 +41,29 @@ pub const Decoder = struct {
                 return u.*.data;
             }
             if (b & 0b11 == 0b01) {
-                const u: *align(1) u16 = @as(*align(1) u16, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                const u: *align(1) U14 = @as(*align(1) U14, @constCast(@ptrCast(self.ptr.? + self.pos)));
                 self.pos += 2;
-                return u.* >> 2;
+                return u.*.data;
+            }
+            if (b & 0b111 == 0b011) {
+                const u: *align(1) U21 = @as(*align(1) U21, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                self.pos += 3;
+                return u.*.data;
+            }
+            if (b & 0b1111 == 0b0111) {
+                const u: *align(1) U28 = @as(*align(1) U28, @constCast(@ptrCast(self.ptr.? + self.pos)));
+                self.pos += 4;
+                return u.*.data;
+            }
+            if (b == 0b1111) {
+                const u: *align(1) u32 = @as(*align(1) u32, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
+                self.pos += 5;
+                return u.*;
+            }
+            if (b == 0b1111_1111) {
+                const u: *align(1) u64 = @as(*align(1) u64, @constCast(@ptrCast(self.ptr.? + self.pos + 1)));
+                self.pos += 9;
+                return u.*;
             }
             unreachable;
         } else {
@@ -79,10 +99,18 @@ test "get signed" {
 }
 
 test "packed uint" {
-    const data = &[_]u8{ 8, 5, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 8, 9 };
+    const data = &[_]u8{ 8, 0b101, 3, 0b1011, 5, 6, 0b10111, 8, 9, 0, 0b1111, 2, 3, 4, 8, 0xff, 1, 2, 3, 4, 5, 6, 7, 8 };
     var decoder = Decoder.init(data);
     const i_1 = try decoder.getPackedUInt();
     try std.testing.expect(0b100 == i_1);
     const i_2 = try decoder.getPackedUInt();
     try std.testing.expect(0b0011_0000_01 == i_2);
+    const i_3 = try decoder.getPackedUInt();
+    try std.testing.expect(0b110_00000101_0000_1 == i_3);
+    const i_4 = try decoder.getPackedUInt();
+    try std.testing.expect(0b1001_00001000_0001 == i_4);
+    const i_5 = try decoder.getPackedUInt();
+    try std.testing.expect(0x08040302 == i_5);
+    const i_6 = try decoder.getPackedUInt();
+    try std.testing.expect(0x0807060504030201 == i_6);
 }
