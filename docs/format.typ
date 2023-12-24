@@ -80,7 +80,21 @@ On request, also the target platform, which is found in the second byte of the .
 
 == Tags
 
-=== 00 none
+=== 00 completed flag
+
+== 02 Unit Compile Flags 
+
+```tbl
+    R L L Lx
+    R L L Lx.
+_
+Offset|Name|Type|Notes
+_
+0 | len | u8 | Length.
+1 | name | utf8 chars | Name.
+\...
+_
+```
 
 === 64 Global Use Unit
 
@@ -91,12 +105,12 @@ _
 Offset|Name|Type|Notes
 _
 0 | len | u8 | Length.
-1 | name | utf8 | Name.
+1 | name | utf8 chars | Name.
 len + 1 | lastModified | TDateTime | Last modified datetime.
 _
 ```
 
-=== 70 Source File Name
+=== 70 | 76 Source File Name
 
 ```tbl
     R L L Lx
@@ -105,8 +119,9 @@ _
 Offset|Name|Type|Notes
 _
 0 | len | u8 | Length.
-1 | name | utf8 | Name.
+1 | name | utf8 chars | Name.
 len + 1 | lastModified | TDateTime | Last modified datetime.
++4 | order | PU | Include order.
 _
 ```
 

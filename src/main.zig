@@ -53,11 +53,11 @@ fn decompile_file(fileName: []const u8) !void {
     const buffer_size = 4 * 1024 * 1024 * 1024;
     const file_buffer = try file.readToEndAlloc(global.allocator, buffer_size);
     defer global.allocator.free(file_buffer);
-    try decomiple_buffer(file_buffer);
+    try decomiple_buffer(fileName, file_buffer);
 }
 
-fn decomiple_buffer(buffer: []u8) !void {
+fn decomiple_buffer(fileName: []const u8, buffer: []u8) !void {
     var d = dcu.Dcu{};
-    d.init(buffer);
+    d.init(fileName, buffer);
     return d.decode();
 }

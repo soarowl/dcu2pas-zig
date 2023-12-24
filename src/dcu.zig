@@ -58,10 +58,12 @@ pub const Plateform = enum(u8) {
 
 pub const Dcu = struct {
     const Self = @This();
+    fileName: ?[]const u8 = null,
     decoder: ?decoder.Decoder = null,
     version: u32 = 0,
 
-    pub fn init(self: *Self, data: []const u8) void {
+    pub fn init(self: *Self, fileName: []const u8, data: []const u8) void {
+        self.fileName = fileName;
         self.decoder = decoder.Decoder.init(data);
     }
 
