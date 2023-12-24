@@ -33,8 +33,12 @@ var app = &cli.App{
 
 pub fn main() !void {
     defer std.debug.assert(gpa.deinit() == .ok);
-    try cli.run(app, allocator);
-    allocator.free(config.files);
+
+    var arena = std.heap.ArenaAllocator.init(allocator);
+    defer arena.deinit();
+    const aa = arena.allocator();
+
+    try cli.run(app, aa);
 }
 
 fn run_decompile() !void {
