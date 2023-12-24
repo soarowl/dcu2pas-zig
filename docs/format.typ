@@ -80,6 +80,20 @@ On request, also the target platform, which is found in the second byte of the .
 
 === 00 none
 
+=== 64 Global Use Unit
+
+```tbl
+    R L L Lx
+    R L L Lx.
+_
+Offset|Name|Type|Notes
+_
+0 | len | u8 | Length.
+1 | name | utf8 | Name.
+len + 1 | lastModified | TDateTime | Last modified datetime.
+_
+```
+
 === 70 Source File Name
 
 ```tbl
