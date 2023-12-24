@@ -33,7 +33,8 @@ var app = &cli.App{
 
 pub fn main() !void {
     defer std.debug.assert(gpa.deinit() == .ok);
-    return cli.run(app, allocator);
+    try cli.run(app, allocator);
+    allocator.free(config.files);
 }
 
 fn run_decompile() !void {

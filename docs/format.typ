@@ -24,7 +24,7 @@ $20 = Delphi 10.2
 $21 = Delphi 10.3
 $22 = Delphi 10.4
 $23 = Delphi 11
-$24 = delphi 12
+$24 = Delphi 12
 ```
 
 There was no change in .dcu format going from Delphi 2006 to Delphi 2007. Therefore they use the same.
@@ -51,6 +51,10 @@ $77 = Android
   source: https://gitlab.com/dcu32int/DCU32INT
 
   The utility DCU32INT parses \*.dcu file and converts it into a close to Pascal form. See DCU32INT.txt for more details. The unit versions supported are Delphi 2.0-8.0, 2005-2006/Turbo Delphi (.net and WIN32), 2007-2010 (WIN32), XE (WIN32), XE2-XE3 (WIN32,WIN64,OSX32), XE4 (WIN32,WIN64,OSX32,iOS simulator, iOS device (no code)), XE5-XE7/AppMethod (WIN32,WIN64,OSX32,iOS simulator, iOS device (no code), Android (no code)), XE8, 10 Seattle, 10.1 Berlin (WIN32,WIN64,OSX32,iOS simulator, iOS device 32/64 (no code),Android (no code)), 10.2 Tokyo (WIN32,WIN64,OSX32,iOS simulator, iOS device 32/64 (no code),Android (no code),Linux (no code)), 10.3 Rio (WIN32,WIN64,OSX32,iOS simulator, iOS device 32/64 (no code),Android (no code),Linux (may be - not checked,no code)), Kylix 1.0-3.0. 
+
++ Innova Solutions Object Database - Delphi DCUs: https://github.com/rogerinnova/ISObjectDbDCUs
+  
+  Delphi DCUs for Adding an Innova Solutions Object Db into your Delphi Application
 
 + IDR (Interactive Delphi Reconstructor): https://github.com/crypto2011/IDR
 
