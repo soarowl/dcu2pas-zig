@@ -39,7 +39,7 @@ From unofficial sources, look at 4th byte of the .dcu
 0E = Delphi 6
 0F = Delphi 7
 11 = Delphi 2005
-12 = Delphi 2006 or 2007
+12 = Delphi 2006 or 2007(BDS2006)
 14 = Delphi 2009
 15 = Delphi 2010
 16 = Delphi XE
@@ -66,14 +66,16 @@ There was no change in .dcu format going from Delphi 2006 to Delphi 2007. Theref
 On request, also the target platform, which is found in the second byte of the .dcu. Values are of course valid only for versions that have these targets.
 
 ```
+00 = Win32
 03 = Win32
 23 = Win64
-04 = Osx32
-14 = iOS emulator
-67 = Android
-76 = iOS device
-77 = Android?
+04 = OSX32
+14 = iOSSimulator
+67 = Android32
+76 = iOSDevice32
+77 = Android32
 87 = Android64
+94 = iOSDevice64
 ```
 
 == Tags
