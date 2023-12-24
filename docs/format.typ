@@ -121,7 +121,7 @@ _
 0 | len | u8 | Length.
 1 | name | utf8 chars | Name.
 len + 1 | lastModified | TDateTime | Last modified datetime.
-+4 | order | PU | Include order.
+len + 5 | order | PU | Include order, count down to 0
 _
 ```
 
