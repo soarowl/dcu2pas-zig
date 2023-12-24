@@ -31,6 +31,22 @@
 
 == Header
 
+```tbl
+    R L L Lx
+    R L L Lx.
+_
+Offset|Name|Type|Notes
+_
+0 | ? | u8 | Unknown.
+1 | platform | u8 | As following.
+2 | ? | u8 | Always 0
+3 | compilerVersion | u8 | As following.
+4 | fileSize | u32 | File size, including this header.
+8 | compileDate | TDateTime | Compiled date time.
+c | crc32 | u32 | Or 0.
+_
+```
+
 === version
 
 From unofficial sources, look at 4th byte of the .dcu
