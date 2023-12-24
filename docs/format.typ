@@ -14,26 +14,27 @@
 From unofficial sources, look at 4th byte of the .dcu
 
 ```
-$0F = Delphi 7
-$11 = Delphi 2005
-$12 = Delphi 2006 or 2007
-$14 = Delphi 2009
-$15 = Delphi 2010
-$16 = Delphi XE
-$17 = Delphi XE2
-$18 = Delphi XE3
-$19 = Delphi XE4
-$1A = Delphi XE5
-$1B = Delphi XE6
-$1C = Delphi XE7
-$1D = Delphi XE8
-$1E = Delphi 10 Seattle
-$1F = Delphi 10.1 Berlin
-$20 = Delphi 10.2
-$21 = Delphi 10.3
-$22 = Delphi 10.4
-$23 = Delphi 11
-$24 = Delphi 12
+0E = Delphi 6
+0F = Delphi 7
+11 = Delphi 2005
+12 = Delphi 2006 or 2007
+14 = Delphi 2009
+15 = Delphi 2010
+16 = Delphi XE
+17 = Delphi XE2
+18 = Delphi XE3
+19 = Delphi XE4
+1A = Delphi XE5
+1B = Delphi XE6
+1C = Delphi XE7
+1D = Delphi XE8
+1E = Delphi 10 Seattle
+1F = Delphi 10.1 Berlin
+20 = Delphi 10.2
+21 = Delphi 10.3
+22 = Delphi 10.4
+23 = Delphi 11
+24 = Delphi 12
 ```
 
 There was no change in .dcu format going from Delphi 2006 to Delphi 2007. Therefore they use the same.
@@ -43,12 +44,14 @@ There was no change in .dcu format going from Delphi 2006 to Delphi 2007. Theref
 On request, also the target platform, which is found in the second byte of the .dcu. Values are of course valid only for versions that have these targets.
 
 ```
-$03 = Win32
-$23 = Win64
-$04 = Osx32
-$14 = iOS emulator
-$76 = iOS device
-$77 = Android
+03 = Win32
+23 = Win64
+04 = Osx32
+14 = iOS emulator
+67 = Android
+76 = iOS device
+77 = Android?
+87 = Android64
 ```
 
 == Some useful sites
@@ -92,6 +95,24 @@ $77 = Android
 
 === others
 
-x86 Disassembly/Disassemblers and Decompilers: https://en.wikibooks.org/wiki/X86_Disassembly/Disassemblers_and_Decompilers
++ x86 Disassembly/Disassemblers and Decompilers: https://en.wikibooks.org/wiki/X86_Disassembly/Disassemblers_and_Decompilers
 
-Software optimization resources: https://www.agner.org/optimize/
++ Software optimization resources: https://www.agner.org/optimize/
+
++ Okteta: https://apps.kde.org/okteta/
+  
+  Okteta is a simple editor for the raw data of files.
+
+  Features:
+
+    - Values and characters shown either in two columns (the traditional display in hex editors) or in rows with the value on top of the character
+    - Editing and navigating similar to a text editor
+    - Customizable data views, with loadable and storable profiles
+    - Tools dockable on all sides or floating
+    - Numerical encodings: Hexadecimal, Decimal, Octal, Binary
+    - Character encodings: All 8-bit encodings as supplied by Qt, EBCDIC
+    - Fast data rendering on screen
+    - Multiple open files
+    - Undo/redo support
+    - Structures tool for analyzing and editing based on user-creatable - - structure definitions
+    - And more...
