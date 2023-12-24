@@ -1,3 +1,10 @@
+#import "@preview/gentle-clues:0.4.0": *
+
+#set heading(numbering: "1.1")
+
+#outline()
+#pagebreak()
+
 = DCU(Delphi Compiled Unit) Format
 
 == Header
@@ -54,7 +61,9 @@ $77 = Android
 
 + Innova Solutions Object Database - Delphi DCUs: https://github.com/rogerinnova/ISObjectDbDCUs
   
-  Delphi DCUs for Adding an Innova Solutions Object Db into your Delphi Application
+  Delphi DCUs for Adding an Innova Solutions Object Db into your Delphi Application.
+
+  #info[I list here as my test suites, because it has full delphi version dcus.]
 
 + IDR (Interactive Delphi Reconstructor): https://github.com/crypto2011/IDR
 
@@ -81,4 +90,6 @@ $77 = Android
 
 === others
 
-https://www.agner.org/optimize/
+x86 Disassembly/Disassemblers and Decompilers: https://en.wikibooks.org/wiki/X86_Disassembly/Disassemblers_and_Decompilers
+
+Software optimization resources: https://www.agner.org/optimize/
