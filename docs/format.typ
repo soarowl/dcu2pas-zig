@@ -1,11 +1,33 @@
 #import "@preview/gentle-clues:0.4.0": *
+#import "@preview/tbl:0.0.4"
 
 #set heading(numbering: "1.1")
+#show: tbl.template.with(box: false, tab: "|")
 
-#outline()
+#outline(indent: true)
 #pagebreak()
 
 = DCU(Delphi Compiled Unit) Format
+
+== Types
+
+=== Packed Signed Int(PI)
+
++ LSB: 0: 7 bit signed int
++ LSB: 01: 14 bit signed int
++ LSB: 011: 21 bit signed int
++ LSB: 0111: 28 bit signed int
++ LSB: 1111: 32 bit signed int
++ LSB: 1111_1111: 64 bit signed int
+
+=== Packed Unsigned Int(PU)
+
++ LSB: 0: 7 bit unsigned int
++ LSB: 01: 14 bit unsigned int
++ LSB: 011: 21 bit unsigned int
++ LSB: 0111: 28 bit unsigned int
++ LSB: 1111: 32 bit unsigned int
++ LSB: 1111_1111: 64 bit unsigned int
 
 == Header
 
@@ -52,6 +74,24 @@ On request, also the target platform, which is found in the second byte of the .
 76 = iOS device
 77 = Android?
 87 = Android64
+```
+
+== Tags
+
+=== 00 none
+
+=== 70 Source File Name
+
+```tbl
+    R L L Lx
+    R L L Lx.
+_
+Offset|Name|Type|Notes
+_
+0 | len | u8 | Length.
+1 | name | utf8 | Name.
+len + 1 | lastModified | TDateTime | Last modified datetime.
+_
 ```
 
 == Some useful sites
