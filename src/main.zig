@@ -5,6 +5,8 @@ const cli = @import("zig-cli");
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 const allocator = gpa.allocator();
+var arena = std.heap.ArenaAllocator.init(allocator);
+const arenaAllocator = arena.allocator();
 
 var config = struct {
     files: [][]const u8 = undefined,
@@ -33,12 +35,8 @@ var app = &cli.App{
 
 pub fn main() !void {
     defer std.debug.assert(gpa.deinit() == .ok);
-
-    var arena = std.heap.ArenaAllocator.init(allocator);
     defer arena.deinit();
-    const aa = arena.allocator();
-
-    try cli.run(app, aa);
+    try cli.run(app, arenaAllocator);
 }
 
 fn run_decompile() !void {
