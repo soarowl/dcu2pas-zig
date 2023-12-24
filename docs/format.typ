@@ -8,7 +8,7 @@
 
 #v(5em)
 #align(center, text(size: 2em)[#title])
-#align(center, text(size: 1.2em)[Zhuo Nengwen])
+#align(center, text(size: 1.2em)[卓能文(Zhuo Nengwen)])
 #v(1em)
 #align(center, [#datetime.today().display()])
 #pagebreak()
