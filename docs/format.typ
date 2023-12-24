@@ -4,15 +4,20 @@
 #set heading(numbering: "1.1")
 #show: tbl.template.with(box: false, tab: "|")
 
+#let title = [DCU(Delphi Compiled Unit) Format]
+
 #v(5em)
-#align(center, text(size: 2em)[DCU(Delphi Compiled Unit) Format])
+#align(center, text(size: 2em)[#title])
 #align(center, text(size: 1.2em)[Zhuo Nengwen])
 #v(1em)
 #align(center, [#datetime.today().display()])
 #pagebreak()
 
 
-#set page(numbering: "I")
+#set page(
+  header: [#h(1fr)#title#h(1fr)#line(length: 100%, stroke: 1pt)],
+  numbering: "I"
+)
 #counter(page).update(1)
 #outline(indent: true)
 #pagebreak()
