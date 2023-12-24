@@ -1,12 +1,8 @@
 const std = @import("std");
 const info = @import("build_info");
 const dcu = @import("dcu.zig");
+const global = @import("global.zig");
 const cli = @import("zig-cli");
-
-var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-const allocator = gpa.allocator();
-var arena = std.heap.ArenaAllocator.init(allocator);
-const arenaAllocator = arena.allocator();
 
 var config = struct {
     files: [][]const u8 = undefined,
@@ -34,9 +30,9 @@ var app = &cli.App{
 };
 
 pub fn main() !void {
-    defer std.debug.assert(gpa.deinit() == .ok);
-    defer arena.deinit();
-    try cli.run(app, arenaAllocator);
+    defer std.debug.assert(global.gpa.deinit() == .ok);
+    defer global.arena.deinit();
+    try cli.run(app, global.arenaAllocator);
 }
 
 fn run_decompile() !void {
@@ -55,8 +51,8 @@ fn decompile_file(fileName: []const u8) !void {
 
     // Read the contents
     const buffer_size = 4 * 1024 * 1024 * 1024;
-    const file_buffer = try file.readToEndAlloc(allocator, buffer_size);
-    defer allocator.free(file_buffer);
+    const file_buffer = try file.readToEndAlloc(global.allocator, buffer_size);
+    defer global.allocator.free(file_buffer);
     try decomiple_buffer(file_buffer);
 }
 
