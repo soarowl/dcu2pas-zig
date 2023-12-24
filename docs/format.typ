@@ -4,14 +4,25 @@
 #set heading(numbering: "1.1")
 #show: tbl.template.with(box: false, tab: "|")
 
+#v(5em)
+#align(center, text(size: 2em)[DCU(Delphi Compiled Unit) Format])
+#align(center, text(size: 1.2em)[Zhuo Nengwen])
+#v(1em)
+#align(center, [#datetime.today().display()])
+#pagebreak()
+
+
+#set page(numbering: "I")
+#counter(page).update(1)
 #outline(indent: true)
 #pagebreak()
 
-= DCU(Delphi Compiled Unit) Format
+#set page(numbering: "1")
+#counter(page).update(1)
 
-== Types
+= Types
 
-=== Packed Signed Int(PI)
+== Packed Signed Int(PI)
 
 + LSB: 0: 7 bit signed int
 + LSB: 01: 14 bit signed int
@@ -20,7 +31,7 @@
 + LSB: 1111: 32 bit signed int
 + LSB: 1111_1111: 64 bit signed int
 
-=== Packed Unsigned Int(PU)
+== Packed Unsigned Int(PU)
 
 + LSB: 0: 7 bit unsigned int
 + LSB: 01: 14 bit unsigned int
@@ -29,7 +40,7 @@
 + LSB: 1111: 32 bit unsigned int
 + LSB: 1111_1111: 64 bit unsigned int
 
-== Header
+= Header
 
 ```tbl
     R L L Lx
@@ -42,12 +53,12 @@ _
 2 | ? | u8 | Always 0
 3 | compilerVersion | u8 | As following.
 4 | fileSize | u32 | File size, including this header.
-8 | compileDate | TDateTime | Compiled date time.
+8 | compiledDate | TDateTime | Compiled date time.
 c | crc32 | u32 | Or 0.
 _
 ```
 
-=== version
+== version
 
 From unofficial sources, look at 4th byte of the .dcu
 
@@ -94,9 +105,9 @@ On request, also the target platform, which is found in the second byte of the .
 94 = iOSDevice64
 ```
 
-== Tags
+= Tags
 
-=== 00 completed flag
+== 00 completed flag
 
 == 02 Unit Compile Flags 
 
@@ -112,7 +123,7 @@ _
 _
 ```
 
-=== 64 Global Use Unit
+== 64 Global Use Unit
 
 ```tbl
     R L L Lx
@@ -126,7 +137,7 @@ len + 1 | lastModified | TDateTime | Last modified datetime.
 _
 ```
 
-=== 70 | 76 Source File Name
+== 70 | 76 Source File Name
 
 ```tbl
     R L L Lx
@@ -141,9 +152,9 @@ len + 5 | order | PU | Include order, count down to 0
 _
 ```
 
-== Some useful sites
+= Some useful sites
 
-=== Delphi related
+== Delphi related
 
 + DCU32INT: http://hmelnov.icc.ru/DCU/index.eng.html
   
@@ -180,7 +191,7 @@ _
   -  A lot of additional information.
   -  You can create a Delphi project folder with all dfm, pas, dpr files. Note: pas files contains the mentioned above well commented ASM code. They can not be recompiled!
 
-=== others
+== others
 
 + x86 Disassembly/Disassemblers and Decompilers: https://en.wikibooks.org/wiki/X86_Disassembly/Disassemblers_and_Decompilers
 
