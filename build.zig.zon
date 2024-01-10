@@ -16,8 +16,12 @@
     // internet connectivity.
     .dependencies = .{
         .@"zig-cli" = .{
-            .url = "https://github.com/sam701/zig-cli/archive/a168988a97cb1f1996ba7da802ed5be30e636456.tar.gz",
-            .hash = "12209bf5ef5ea0a5832797fabe65efadc63deb5af3178309ecf7b03a67aabfdbbfae",
+            .url = "https://github.com/sam701/zig-cli/archive/fef13e1771db65492381a073c83cf175fbbdf632.tar.gz",
+            .hash = "1220b1cc7c256080eb3229d95a8519d6a33035dc83558a8ca1ed6e407008a38fe2c2",
+        },
+        .@"zig-string" = .{
+            .url = "https://github.com/soarowl/zig-string/archive/12be83393a529d5ddc9fb40f8a7e45f123b9df49.tar.gz",
+            .hash = "122019d118a6c84c9656d508b68eff7628e8a3783744c0d47094ba5965734632309d",
         },
     },
 

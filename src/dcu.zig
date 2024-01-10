@@ -1,5 +1,6 @@
-const std = @import("std");
 const decoder = @import("decoder.zig");
+const global = @import("global.zig");
+const std = @import("std");
 
 pub const DelphiVersion = enum(u8) {
     D6 = 0x0E,
@@ -70,6 +71,11 @@ pub const Dcu = struct {
     pub fn decode(self: *Self) !void {
         self.version = try self.decoder.?.get(u32);
 
-        std.debug.print("version: {x:08}\n", .{self.version});
+        var newName = global.String.init(global.allocator);
+        defer newName.deinit();
+        var file = try std.fs.cwd().createFile(newName.str(), .{});
+        defer file.close();
+        const writer = file.writer();
+        try writer.print("version: {x:08}\n", .{self.version});
     }
 };

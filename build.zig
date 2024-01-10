@@ -32,6 +32,8 @@ pub fn build(b: *std.Build) !void {
 
     const zigcli_dep = b.dependency("zig-cli", .{ .target = target, .optimize = optimize });
     const zigcli_mod = zigcli_dep.module("zig-cli");
+    const zigstring_dep = b.dependency("zig-string", .{ .target = target, .optimize = optimize });
+    const zigstring_mod = zigstring_dep.module("string");
 
     const lib = b.addStaticLibrary(.{
         .name = "dcu2pas",
@@ -54,8 +56,9 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
 
-    exe.addModule("build_info", b.modules.get("build_info").?);
-    exe.addModule("zig-cli", zigcli_mod);
+    exe.root_module.addImport("build_info", b.modules.get("build_info").?);
+    exe.root_module.addImport("zig-cli", zigcli_mod);
+    exe.root_module.addImport("zig-string", zigstring_mod);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
